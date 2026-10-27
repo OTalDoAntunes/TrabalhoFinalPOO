@@ -8,7 +8,7 @@ public class Teste{
             GestaoDeAnimais gestao = new GestaoDeAnimais();
 
             gestao.cadastrarAnimais("douglas", "cachorro", "labrador", "grande", "saudavel", "12/09/2016", "Adotado", 10);
-            gestao.cadastrarAnimais("mario", "gato", "persa", "pequeno", "doente", "09/10/2026", "nao adotado", 6);
+            gestao.cadastrarAnimais("mario", "gato", "persa", "pequeno", "doente", "30/11/2026", "nao adotado", 6);
             System.out.println("editando elementos");
             gestao.editarRegistros();
             System.out.println("Verificando a ediçao e removendo");

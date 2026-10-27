@@ -41,70 +41,61 @@ public class GestaoDeAnimais{
                     if(i == numeroRegistro){
                         do{
                             continuar = false;
-                            String dadoAltera = JOptionPane.showInputDialog("Qual informaçâo quer editar?").toLowerCase();
+                            String dadoAltera = JOptionPane.showInputDialog("Qual informaçâo quer editar?");
+                            dadoAltera = dadoAltera.replace(" ", "");
 
-                            switch (dadoAltera) {
-                                case "nome":
-                                    String nome = JOptionPane.showInputDialog("Insira o nome:");
-                                    if(nome == null || nome.isEmpty() || nome.isEmpty())
-                                        throw new IllegalArgumentException();
-                                    g.setNome(nome);
-                                    break;
-
-                                case "especie":
-                                    String especie = JOptionPane.showInputDialog("Insira a especie:");
-                                    if(especie == null || especie.isEmpty() || especie.isBlank())
-                                        throw new IllegalArgumentException();
-                                    g.setEspecie(especie);
-                                    break;
-
-                                case "raca":
-                                    String raca = JOptionPane.showInputDialog("Insira a raça:");
-                                    if(raca == null || raca.isEmpty() || raca.isBlank())
-                                        throw new IllegalArgumentException();
-                                    g.setRaca(raca);
-                                    break;
-
-                                case "porte":
-                                    String porte = JOptionPane.showInputDialog("Insira o porte:");
-                                    if(porte == null || porte.isEmpty() || porte.isBlank())
-                                        throw new IllegalArgumentException();
-                                    g.setPorte(porte);
-                                    break;
-
-                                case "estado de saude":
-                                    String saude = JOptionPane.showInputDialog("Insira o estado de saúde:");
-                                    if(saude == null || saude.isEmpty() || saude.isBlank())
-                                        throw new IllegalArgumentException();
-                                    g.setEstadoSaude(saude);
-                                    break;
-
-                                case "data de resgate":
-                                    String data = JOptionPane.showInputDialog("Insira a data de resgate:\nA data deve estar no formato dia/mes/ano, com o dia e o mes contendo dois algarismos.");
-                                    if(data == null || data.isEmpty() || data.isBlank())
-                                        throw new IllegalArgumentException();
-                                    //fazer o jeito de pegar a execeção
-                                    g.setDataResgate(data);
-                                    break;
-
-                                case "status da adocao":
-                                    String status = JOptionPane.showInputDialog("Insira o status da adoção:");
-                                    if(status == null || status.isEmpty() || status.isBlank())
-                                        throw new IllegalArgumentException();
-                                    g.setStatusAdocao(status);
-                                    break;
-
-                                case "idade":
-                                    int idade = Integer.parseInt(JOptionPane.showInputDialog("Insira a idade:"));
-                                    if(idade <= 0)
-                                        throw new IdadeInvalidaException("Idade menor ou igual a zero");
-                                    g.setIdade(idade);
-                                    break;
-
-                                default:
-                                    JOptionPane.showMessageDialog(null, "Opção inavlida!");
-                                    break;
+                            if(dadoAltera.equalsIgnoreCase("nome")){
+                                String nome = JOptionPane.showInputDialog("Insira o nome:");
+                                if(nome == null || nome.isEmpty() || nome.isEmpty())
+                                    throw new IllegalArgumentException();
+                                g.setNome(nome);
                             }
+                            else if(dadoAltera.equalsIgnoreCase("especie")){
+                                String especie = JOptionPane.showInputDialog("Insira a especie:");
+                                if(especie == null || especie.isEmpty() || especie.isBlank())
+                                    throw new IllegalArgumentException();
+                                g.setEspecie(especie);
+                            }
+                            else if(dadoAltera.equalsIgnoreCase("raca") || dadoAltera.equalsIgnoreCase("raça")){
+                                String raca = JOptionPane.showInputDialog("Insira a raça:");
+                                if(raca == null || raca.isEmpty() || raca.isBlank())
+                                    throw new IllegalArgumentException();
+                                g.setRaca(raca);
+                            }
+                            else if(dadoAltera.equalsIgnoreCase("porte")){
+                                String porte = JOptionPane.showInputDialog("Insira o porte:");
+                                if(porte == null || porte.isEmpty() || porte.isBlank())
+                                    throw new IllegalArgumentException();
+                                g.setPorte(porte);
+                            }
+                            else if(dadoAltera.equalsIgnoreCase("estadoDeSaude") || dadoAltera.equalsIgnoreCase("estadoDeSaúde")){
+                                String saude = JOptionPane.showInputDialog("Insira o estado de saúde:");
+                                if(saude == null || saude.isEmpty() || saude.isBlank())
+                                    throw new IllegalArgumentException();
+                                g.setEstadoSaude(saude);
+                            }
+                            else if(dadoAltera.equalsIgnoreCase("dataDeResgate")){
+                                String data = JOptionPane.showInputDialog("Insira a data de resgate:\nA data deve estar no formato dia/mes/ano, com o dia e o mes contendo os dois algarismos e o ano completo.");
+                                if(data == null || data.isEmpty() || data.isBlank())
+                                    throw new IllegalArgumentException();
+                                if(DataInvalidaException.validarData(data) == false)
+                                    throw new DataInvalidaException("Data em um formato invalido.");
+                                g.setDataResgate(data);
+                            }
+                            else if(dadoAltera.equalsIgnoreCase("statusDaAdocao") || dadoAltera.equalsIgnoreCase("statusDaAdoção")){
+                                String status = JOptionPane.showInputDialog("Insira o status da adoção:");
+                                if(status == null || status.isEmpty() || status.isBlank())
+                                    throw new IllegalArgumentException();
+                                g.setStatusAdocao(status);
+                            }
+                            else if(dadoAltera.equalsIgnoreCase("idade")){
+                                int idade = Integer.parseInt(JOptionPane.showInputDialog("Insira a idade:"));
+                                if(idade <= 0)
+                                    throw new IdadeInvalidaException("Idade menor ou igual a zero");
+                                g.setIdade(idade);
+                            }
+                            else
+                                JOptionPane.showMessageDialog(null, "Opção inavlida!");
                             
                             if(JOptionPane.showInputDialog("Deseja editar mais alguma informação?(S/N)").toLowerCase().equals("s"))
                                 continuar = true;

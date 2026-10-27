@@ -9,7 +9,8 @@ public class Animal{
             throw new IllegalArgumentException();
         if(idade <= 0)
             throw new IdadeInvalidaException("Idade menor ou igual a zero.");
-        //fazer o jeito de pegar a exceção
+        if(DataInvalidaException.validarData(dataDeResgate) == false)
+            throw new DataInvalidaException("Data em um formato invalido.");
         this.nome = nome;
         this.especie = especie;
         this.raca = raca;

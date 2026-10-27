@@ -121,4 +121,30 @@ public class GestaoDeAnimais{
             JOptionPane.showMessageDialog(null, "Nao existem registros.");
         
     }
+
+    public void buscar() throws IllegalArgumentException{
+        String opcao = JOptionPane.showInputDialog("Por qual carcteristica deseja buscar?\n(nome, especie, raça, porte, estado de saúde, data de resgate, status da adoção, idade)");
+        if(opcao == null || opcao.isEmpty() || opcao.isBlank())
+            throw new IllegalArgumentException();
+        opcao = opcao.replace(" ", "");
+
+        if(opcao.equalsIgnoreCase("nome")){
+            String nome = JOptionPane.showInputDialog("Insira um nome para a busca.\nLembrando que o sistema diferencia letras maiusculas de minusculas.");
+            if(nome == null || nome.isEmpty() || nome.isBlank())
+                throw new IllegalArgumentException();
+
+            if(registros.contains(nome)){
+                List<Animal> buscaFiltrada = new ArrayList<>();
+
+                for(Animal a : registros){
+                    if(a.getNome().equals(nome)){
+                        buscaFiltrada.add(a);        
+                    }
+                }
+
+                mostrarRegistros(buscaFiltrada);
+            }   else
+                JOptionPane.showMessageDialog(null, "Nome não existente na lista.");
+        }
+    }
 }

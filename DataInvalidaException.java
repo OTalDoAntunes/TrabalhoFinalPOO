@@ -9,8 +9,15 @@ public class DataInvalidaException extends Exception{
         String[] messes = {"01", "02", "03", "04", "05", "06", "07", "08", "09", "10", "11", "12"};
         boolean mesExistente = false;
 
-        if((data.charAt(0) < '0' || data.charAt(0) > '9') || (data.charAt(1) < '0' || data.charAt(1) > '9') || data.charAt(2) != '/' || (data.charAt(3) < '0' || data.charAt(3) > '9') || (data.charAt(4) < '0' || data.charAt(4) > '9') || data.charAt(5) != '/')
-            return false;
+        for(int i = 0; i < data.length(); i++){
+            if(i == 2 || i == 5){
+                if(data.charAt(i) != '/')
+                    return false;
+            } else{
+                if(data.charAt(i) < '0' || data.charAt(i) > '9')
+                    return false;
+            }
+        }
 
         for(int i = 0; i < 12; i++){
             if(data.regionMatches(3, messes[i], 0, 2)){

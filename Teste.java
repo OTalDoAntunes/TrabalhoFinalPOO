@@ -9,12 +9,15 @@ public class Teste{
 
             gestao.cadastrarAnimais("douglas", "cachorro", "labrador", "grande", "saudavel", "12/09/2016", "Adotado", 10);
             gestao.cadastrarAnimais("mario", "gato", "persa", "pequeno", "doente", "30/11/2026", "nao adotado", 6);
+        
             System.out.println("editando elementos");
             gestao.editarRegistros();
             System.out.println("Verificando a ediçao e removendo");
             gestao.editarRegistros();
             System.out.println("verificando a remocao");
             gestao.editarRegistros();
+
+            gestao.buscar();
         } catch(IllegalArgumentException IAE){
             JOptionPane.showMessageDialog(null, "Alguma entrada  é invalida!");
 

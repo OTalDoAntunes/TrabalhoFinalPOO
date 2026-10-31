@@ -1,4 +1,4 @@
-package TrabalhoFinalPOO;
+package TrabalhoFinalPOO.Excecoes;
 
 public class DataInvalidaException extends Exception{
     public DataInvalidaException(String mensagem){

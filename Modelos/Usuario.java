@@ -1,4 +1,4 @@
-package TrabalhoFinalPOO;
+package TrabalhoFinalPOO.Modelos;
 
 public abstract class Usuario{
     private String login, senha, nome, cpf;

@@ -1,12 +1,29 @@
 package TrabalhoFinalPOO.Modelos;
 
-public abstract class Usuario{
-    private String login, senha, nome, cpf;
+import java.util.List;
+import java.util.ArrayList;
 
-    public Usuario(String login, String senha, String nome, String cpf){
+public abstract class Usuario{
+    private String login, senha;
+    private List<Usuario> usuarios = new ArrayList<>();
+
+    public Usuario(String login, String senha) throws IllegalArgumentException{
+        if((login == null || login.isEmpty() || login.isBlank()) || (senha == null || senha.isEmpty() || senha.isBlank()))
+            throw new IllegalArgumentException();
+
         this.login = login;
         this.senha = senha;
-        this.nome = nome;
-        this.cpf = cpf;
+    }
+
+    public String getLogin(){
+        return this.login;
+    }
+
+    public String getSenha(){
+        return this.senha;
+    }
+
+    public void adicionarUsuario(Usuario usuario){
+        this.usuarios.add(usuario);
     }
 }

@@ -21,6 +21,7 @@ public class Teste{
 
             //gestao.buscar();
             adocao.solicitarAdocao(gestao);
+            adocao.devolucao(gestao);
         } catch(IllegalArgumentException IAE){
             JOptionPane.showMessageDialog(null, "Alguma entrada  é invalida!");
 

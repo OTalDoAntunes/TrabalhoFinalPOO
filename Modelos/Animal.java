@@ -1,21 +1,10 @@
 package TrabalhoFinalPOO.Modelos;
 
-import TrabalhoFinalPOO.Excecoes.*;
-
 public class Animal{
     private String nome, especie, raca, porte, estadoDeSaude, dataDeResgate, statusDaAdocao;
     private int idade;
 
-    public Animal(String nome, String especie, String raca, String porte, String estadoDeSaude, String dataDeResgate, String statusDaAdocao, int idade) throws IllegalArgumentException, DataInvalidaException, IdadeInvalidaException, StatusAdocaoInvalidoException{
-        if((nome == null || nome.isEmpty() || nome.isBlank()) || (especie == null || especie.isEmpty() || especie.isBlank()) || (raca == null || raca.isEmpty() || raca.isBlank()) || (porte == null || porte.isEmpty() || porte.isBlank()) || (estadoDeSaude == null || estadoDeSaude.isEmpty() || estadoDeSaude.isBlank()) || (statusDaAdocao == null || statusDaAdocao.isEmpty() || statusDaAdocao.isBlank()) || (dataDeResgate == null || dataDeResgate.isEmpty() || dataDeResgate.isBlank()))
-            throw new IllegalArgumentException();
-        if(idade <= 0)
-            throw new IdadeInvalidaException("Idade menor ou igual a zero.");
-        if(DataInvalidaException.validarData(dataDeResgate) == false)
-            throw new DataInvalidaException("Data em um formato invalido.");
-        if((statusDaAdocao.trim().equalsIgnoreCase("disponivel") || statusDaAdocao.trim().equalsIgnoreCase("disponível") || statusDaAdocao.trim().equalsIgnoreCase("indisponivel") || statusDaAdocao.trim().equalsIgnoreCase("indisponível")) == false)
-            throw new StatusAdocaoInvalidoException("Status de adoção invalido.");
-
+    public Animal(String nome, String especie, String raca, String porte, String estadoDeSaude, String dataDeResgate, String statusDaAdocao, int idade){
         this.nome = nome;
         this.especie = especie;
         this.raca = raca;

@@ -2,14 +2,19 @@ package TrabalhoFinalPOO.Modelos;
 
 import java.util.List;
 import java.util.ArrayList;
+import TrabalhoFinalPOO.Excecoes.*;
+import TrabalhoFinalPOO.Usuarios.Voluntario;
 
 public abstract class Usuario{
     private String login, senha;
-    private List<Usuario> usuarios = new ArrayList<>();
+    private static List<Usuario> usuarios = new ArrayList<>();
 
-    public Usuario(String login, String senha) throws IllegalArgumentException{
-        if((login == null || login.isEmpty() || login.isBlank()) || (senha == null || senha.isEmpty() || senha.isBlank()))
-            throw new IllegalArgumentException();
+    public Usuario(String login, String senha)throws LoginJaExistenteException{
+        for(Usuario u : usuarios){
+            if(login.equalsIgnoreCase(u.getLogin())){
+                    throw new LoginJaExistenteException("Ja existe um usuario com esse login.");
+            }
+        }
 
         this.login = login;
         this.senha = senha;
@@ -24,6 +29,6 @@ public abstract class Usuario{
     }
 
     public void adicionarUsuario(Usuario usuario){
-        this.usuarios.add(usuario);
+        usuarios.add(usuario);
     }
 }

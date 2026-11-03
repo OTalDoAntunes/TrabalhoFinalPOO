@@ -4,6 +4,8 @@ import javax.swing.*;
 import java.util.List;
 import java.util.ArrayList;
 import TrabalhoFinalPOO.Modelos.Animal;
+import TrabalhoFinalPOO.Modelos.Usuario;
+import TrabalhoFinalPOO.Usuarios.*;
 import TrabalhoFinalPOO.Excecoes.*;
 
 public class GestaoDeAnimais{
@@ -35,8 +37,47 @@ public class GestaoDeAnimais{
         
     }
 
-    public void cadastrarAnimais(String nome, String especie, String raca, String porte, String estadoDeSaude, String dataDeResgate, String statusDaAdocao, int idade){
+    public void cadastrarAnimais(Usuario tipoUsuario){
         try{
+            if(tipoUsuario instanceof Voluntario || tipoUsuario instanceof Veterinario)
+                throw new PermissaoInvalidaException("Voce não possui permissão para fazer isso.");
+
+            String nome = JOptionPane.showInputDialog("Insira o nome do animal:");
+            if(nome == null || nome.isEmpty() || nome.isBlank())
+                throw new IllegalArgumentException();
+
+            String especie = JOptionPane.showInputDialog("Insira a especie do animal:");
+            if(especie == null || especie.isEmpty() || especie.isBlank())
+                throw new IllegalArgumentException();
+
+            String raca = JOptionPane.showInputDialog("Insira a raça do animal:");
+            if(raca == null || raca.isEmpty() || raca.isBlank())
+                throw new IllegalArgumentException();
+            
+            String porte = JOptionPane.showInputDialog("Insira o porte do animal:");
+            if(porte == null || porte.isEmpty() || porte.isBlank())
+                throw new IllegalArgumentException();
+
+            String estadoDeSaude = JOptionPane.showInputDialog("Insira o estado de saúde do animal:");
+            if(estadoDeSaude == null || estadoDeSaude.isEmpty() || estadoDeSaude.isBlank())
+                throw new IllegalArgumentException();
+
+            String dataDeResgate = JOptionPane.showInputDialog("Insira a data de resgate.\nLembrando que a data deve estar no formato dia/mes/ano, com o dia e mes com os dois algarismos e o ano completo.");
+            if(dataDeResgate == null || dataDeResgate.isEmpty() || dataDeResgate.isBlank())
+                throw new IllegalArgumentException();
+            if(DataInvalidaException.validarData(dataDeResgate) == false)
+                throw new DataInvalidaException("Data invalida.");
+
+            String statusDaAdocao = JOptionPane.showInputDialog("Insira o status da adoção(disponível ou indisponível)");
+            if(statusDaAdocao == null || statusDaAdocao.isEmpty() || statusDaAdocao.isBlank())
+                throw new IllegalArgumentException();
+            if((statusDaAdocao.trim().equalsIgnoreCase("disponivel") || statusDaAdocao.trim().equalsIgnoreCase("disponível") || statusDaAdocao.trim().equalsIgnoreCase("indisponivel") || statusDaAdocao.trim().equalsIgnoreCase("indisponível")) == false)
+                throw new StatusAdocaoInvalidoException("Status de adoção invalido");
+
+            int idade = Integer.parseInt(JOptionPane.showInputDialog("Insira a idade do animal:"));
+            if(idade <= 0)
+                throw new IdadeInvalidaException("Idade menor ou igual a zero.");
+
             Animal novoAnimal = new Animal(nome, especie, raca, porte, estadoDeSaude, dataDeResgate, statusDaAdocao, idade);
             this.registrosAnimais.add(novoAnimal);
 
@@ -44,7 +85,7 @@ public class GestaoDeAnimais{
             JOptionPane.showMessageDialog(null, "Entrada invalida", "ERRO!", JOptionPane.INFORMATION_MESSAGE);
 
         } catch(DataInvalidaException DIE){
-            JOptionPane.showMessageDialog(null, "Data em um formato invalido.", "ERRO!", JOptionPane.INFORMATION_MESSAGE);
+            JOptionPane.showMessageDialog(null, "Data invalida.", "ERRO!", JOptionPane.INFORMATION_MESSAGE);
 
         } catch(IdadeInvalidaException IIE){
             JOptionPane.showMessageDialog(null, "A idade deve ser maior que zero.", "ERRO!", JOptionPane.INFORMATION_MESSAGE);
@@ -52,165 +93,176 @@ public class GestaoDeAnimais{
         } catch(StatusAdocaoInvalidoException SAIE){
             JOptionPane.showMessageDialog(null, "Status de adoção invalido.", "ERRO!", JOptionPane.INFORMATION_MESSAGE);
 
+        } catch(PermissaoInvalidaException PIE){
+            JOptionPane.showMessageDialog(null, "Voce não tem permissão para fazer isso.", "ERRO!", JOptionPane.INFORMATION_MESSAGE);
         }
         
     }
 
-    public void editarRegistros(){
-        if(this.registrosAnimais.size() != 0){
-            int opcao = Integer.parseInt(JOptionPane.showInputDialog("Qual operação deseja realizar?\n1 - Editar o registro de um animal.\n2 - Remover um registro."));
+    public void editarRegistros(Usuario tipoUsuario){
+        try{
+            if(tipoUsuario instanceof Voluntario)
+                throw new PermissaoInvalidaException("Voce não possui permissao para fazer isso.");
+            if(this.registrosAnimais.size() != 0){
+                int opcao = Integer.parseInt(JOptionPane.showInputDialog("Qual operação deseja realizar?\n1 - Editar o registro de um animal.\n2 - Remover um registro."));
 
-            if(opcao == 1){
-                boolean continuar;
-                mostrarRegistros(this.registrosAnimais);
-                int numeroRegistro = Integer.parseInt(JOptionPane.showInputDialog("Qual registro deseja editar?\nInforme o numero do registro.")), i = 1;
+                if(opcao == 1){
+                    boolean continuar;
+                    mostrarRegistros(this.registrosAnimais);
+                    int numeroRegistro = Integer.parseInt(JOptionPane.showInputDialog("Qual registro deseja editar?\nInforme o numero do registro.")), i = 1;
 
-                for(Animal g : this.registrosAnimais){
-                    if(i == numeroRegistro){
-                        do{
-                            continuar = false;
-                            String dadoAltera = JOptionPane.showInputDialog("Qual informaçâo quer editar?");
-                            dadoAltera = dadoAltera.replace(" ", "");
+                    for(Animal g : this.registrosAnimais){
+                        if(i == numeroRegistro){
+                            do{
+                                continuar = false;
+                                String dadoAltera = JOptionPane.showInputDialog("Qual informaçâo quer editar?");
+                                dadoAltera = dadoAltera.replace(" ", "");
 
-                            if(dadoAltera.equalsIgnoreCase("nome")){
-                                try{
-                                    String nome = JOptionPane.showInputDialog("Insira o nome:").trim();
-                                    if(nome == null || nome.isEmpty() || nome.isEmpty())
-                                        throw new IllegalArgumentException();
-                                    g.setNome(nome);
+                                if(dadoAltera.equalsIgnoreCase("nome")){
+                                    try{
+                                        String nome = JOptionPane.showInputDialog("Insira o nome:").trim();
+                                        if(nome == null || nome.isEmpty() || nome.isEmpty())
+                                            throw new IllegalArgumentException();
+                                        g.setNome(nome);
 
-                                } catch(IllegalArgumentException IAE){
-                                    JOptionPane.showMessageDialog(null, "Entrada invalida.", "ERRO!", JOptionPane.INFORMATION_MESSAGE);
+                                    } catch(IllegalArgumentException IAE){
+                                        JOptionPane.showMessageDialog(null, "Entrada invalida.", "ERRO!", JOptionPane.INFORMATION_MESSAGE);
 
-                                }
+                                    }
                                 
-                            }
-                            else if(dadoAltera.equalsIgnoreCase("especie")){
-                                try{
-                                    String especie = JOptionPane.showInputDialog("Insira a especie:").trim();
-                                    if(especie == null || especie.isEmpty() || especie.isBlank())
-                                        throw new IllegalArgumentException();
-                                    g.setEspecie(especie);
-
-                                } catch(IllegalArgumentException IAE){
-                                    JOptionPane.showMessageDialog(null, "Entrada invalida.", "ERRO!", JOptionPane.INFORMATION_MESSAGE);
-
                                 }
+                                else if(dadoAltera.equalsIgnoreCase("especie")){
+                                    try{
+                                        String especie = JOptionPane.showInputDialog("Insira a especie:").trim();
+                                        if(especie == null || especie.isEmpty() || especie.isBlank())
+                                            throw new IllegalArgumentException();
+                                        g.setEspecie(especie);
+
+                                    } catch(IllegalArgumentException IAE){
+                                        JOptionPane.showMessageDialog(null, "Entrada invalida.", "ERRO!", JOptionPane.INFORMATION_MESSAGE);
+
+                                    }
                                 
-                            }
-                            else if(dadoAltera.equalsIgnoreCase("raca") || dadoAltera.equalsIgnoreCase("raça")){
-                                try{
-                                    String raca = JOptionPane.showInputDialog("Insira a raça:").trim();
-                                    if(raca == null || raca.isEmpty() || raca.isBlank())
-                                        throw new IllegalArgumentException();
-                                    g.setRaca(raca);
-
-                                } catch(IllegalArgumentException IAE){
-                                    JOptionPane.showMessageDialog(null, "Entrada invalida.", "ERRO!", JOptionPane.INFORMATION_MESSAGE);
-
                                 }
+                                else if(dadoAltera.equalsIgnoreCase("raca") || dadoAltera.equalsIgnoreCase("raça")){
+                                    try{
+                                        String raca = JOptionPane.showInputDialog("Insira a raça:").trim();
+                                        if(raca == null || raca.isEmpty() || raca.isBlank())
+                                            throw new IllegalArgumentException();
+                                        g.setRaca(raca);
+
+                                    } catch(IllegalArgumentException IAE){
+                                        JOptionPane.showMessageDialog(null, "Entrada invalida.", "ERRO!", JOptionPane.INFORMATION_MESSAGE);
+
+                                    }
                                 
-                            }
-                            else if(dadoAltera.equalsIgnoreCase("porte")){
-                                try{
-                                    String porte = JOptionPane.showInputDialog("Insira o porte:").trim();
-                                    if(porte == null || porte.isEmpty() || porte.isBlank())
-                                        throw new IllegalArgumentException();
-                                    g.setPorte(porte);
-
-                                } catch(IllegalArgumentException IAE){
-                                    JOptionPane.showMessageDialog(null, "Entrada invalida.", "ERRO!", JOptionPane.INFORMATION_MESSAGE);
-
                                 }
+                                else if(dadoAltera.equalsIgnoreCase("porte")){
+                                    try{
+                                        String porte = JOptionPane.showInputDialog("Insira o porte:").trim();
+                                        if(porte == null || porte.isEmpty() || porte.isBlank())
+                                            throw new IllegalArgumentException();
+                                        g.setPorte(porte);
+
+                                    } catch(IllegalArgumentException IAE){
+                                        JOptionPane.showMessageDialog(null, "Entrada invalida.", "ERRO!", JOptionPane.INFORMATION_MESSAGE);
+
+                                    }
                                 
-                            }
-                            else if(dadoAltera.equalsIgnoreCase("estadoDeSaude") || dadoAltera.equalsIgnoreCase("estadoDeSaúde")){
-                                try{
-                                    String saude = JOptionPane.showInputDialog("Insira o estado de saúde:").trim();
-                                    if(saude == null || saude.isEmpty() || saude.isBlank())
-                                        throw new IllegalArgumentException();
-                                    g.setEstadoSaude(saude);
-
-                                } catch(IllegalArgumentException IAE){
-                                    JOptionPane.showMessageDialog(null, "Entrada invalida.", "ERRO!", JOptionPane.INFORMATION_MESSAGE);
-
                                 }
+                                else if(dadoAltera.equalsIgnoreCase("estadoDeSaude") || dadoAltera.equalsIgnoreCase("estadoDeSaúde")){
+                                    try{
+                                        String saude = JOptionPane.showInputDialog("Insira o estado de saúde:").trim();
+                                        if(saude == null || saude.isEmpty() || saude.isBlank())
+                                            throw new IllegalArgumentException();
+                                        g.setEstadoSaude(saude);
+
+                                    } catch(IllegalArgumentException IAE){
+                                        JOptionPane.showMessageDialog(null, "Entrada invalida.", "ERRO!", JOptionPane.INFORMATION_MESSAGE);
+
+                                    }
                                 
-                            }
-                            else if(dadoAltera.equalsIgnoreCase("dataDeResgate")){
-                                try{
-                                    String data = JOptionPane.showInputDialog("Insira a data de resgate:\nA data deve estar no formato dia/mes/ano, com o dia e o mes contendo os dois algarismos e o ano completo.").trim();
-                                    if(data == null || data.isEmpty() || data.isBlank())
-                                        throw new IllegalArgumentException();
-                                    if(DataInvalidaException.validarData(data) == false)
-                                        throw new DataInvalidaException("Data em um formato invalido.");
-                                    g.setDataResgate(data);
-
-                                } catch(IllegalArgumentException IAE){
-                                    JOptionPane.showMessageDialog(null, "Entrada invalida!", "ERRO!", JOptionPane.INFORMATION_MESSAGE);
-                
-                                } catch(DataInvalidaException DIE){
-                                    JOptionPane.showMessageDialog(null, "Data em um formato invalido.", "ERRO!", JOptionPane.INFORMATION_MESSAGE);
-
                                 }
+                                else if(dadoAltera.equalsIgnoreCase("dataDeResgate")){
+                                    try{
+                                        String data = JOptionPane.showInputDialog("Insira a data de resgate:\nA data deve estar no formato dia/mes/ano, com o dia e o mes contendo os dois algarismos e o ano completo.").trim();
+                                        if(data == null || data.isEmpty() || data.isBlank())
+                                            throw new IllegalArgumentException();
+                                        if(DataInvalidaException.validarData(data) == false)
+                                            throw new DataInvalidaException("Data em um formato invalido.");
+                                        g.setDataResgate(data);
+
+                                    } catch(IllegalArgumentException IAE){
+                                        JOptionPane.showMessageDialog(null, "Entrada invalida!", "ERRO!", JOptionPane.INFORMATION_MESSAGE);
+
+                                    } catch(DataInvalidaException DIE){
+                                        JOptionPane.showMessageDialog(null, "Data em um formato invalido.", "ERRO!", JOptionPane.INFORMATION_MESSAGE);
+
+                                    }
                                 
-                            }
-                            else if(dadoAltera.equalsIgnoreCase("statusDaAdocao") || dadoAltera.equalsIgnoreCase("statusDaAdoção")){
-                                try{
-                                    String status = JOptionPane.showInputDialog("Insira o status da adoção(disponível ou indisponível):").trim();
-                                    if(status == null || status.isEmpty() || status.isBlank())
-                                        throw new IllegalArgumentException();
-                                    if((status.trim().equalsIgnoreCase("disponivel") || status.trim().equalsIgnoreCase("disponível") || status.trim().equalsIgnoreCase("indisponivel") || status.trim().equalsIgnoreCase("indisponível")) == false)
-                                        throw new StatusAdocaoInvalidoException("Status de adoção invalido.");    
-                                    g.setStatusAdocao(status);
-
-                                } catch(IllegalArgumentException IAE){
-                                    JOptionPane.showMessageDialog(null, "Entrada invalida.", "ERRO!", JOptionPane.INFORMATION_MESSAGE);
-
-                                } catch(StatusAdocaoInvalidoException SAIE){
-                                    JOptionPane.showMessageDialog(null, "Status de adoção invalido.", "ERRO!", JOptionPane.INFORMATION_MESSAGE);
-
                                 }
+                                else if(dadoAltera.equalsIgnoreCase("statusDaAdocao") || dadoAltera.equalsIgnoreCase("statusDaAdoção")){
+                                    try{
+                                        String status = JOptionPane.showInputDialog("Insira o status da adoção(disponível ou indisponível):").trim();
+                                        if(status == null || status.isEmpty() || status.isBlank())
+                                            throw new IllegalArgumentException();
+                                        if((status.trim().equalsIgnoreCase("disponivel") || status.trim().equalsIgnoreCase("disponível") || status.trim().equalsIgnoreCase("indisponivel") || status.trim().equalsIgnoreCase("indisponível")) == false)
+                                            throw new StatusAdocaoInvalidoException("Status de adoção invalido.");    
+                                        g.setStatusAdocao(status);
+
+                                    } catch(IllegalArgumentException IAE){
+                                        JOptionPane.showMessageDialog(null, "Entrada invalida.", "ERRO!", JOptionPane.INFORMATION_MESSAGE);
+
+                                    } catch(StatusAdocaoInvalidoException SAIE){
+                                        JOptionPane.showMessageDialog(null, "Status de adoção invalido.", "ERRO!", JOptionPane.INFORMATION_MESSAGE);
+
+                                    }
                                 
-                            }
-                            else if(dadoAltera.equalsIgnoreCase("idade")){
-                                try{
-                                    int idade = Integer.parseInt(JOptionPane.showInputDialog("Insira a idade:"));
-                                    if(idade <= 0)
-                                        throw new IdadeInvalidaException("Idade menor ou igual a zero");
-                                    g.setIdade(idade);
-
-                                } catch(IdadeInvalidaException IIE){
-                                    JOptionPane.showMessageDialog(null, "Idade deve ser maior que zero!", "ERRO!", JOptionPane.INFORMATION_MESSAGE);
-
                                 }
+                                else if(dadoAltera.equalsIgnoreCase("idade")){
+                                    try{
+                                        int idade = Integer.parseInt(JOptionPane.showInputDialog("Insira a idade:"));
+                                        if(idade <= 0)
+                                            throw new IdadeInvalidaException("Idade menor ou igual a zero");
+                                        g.setIdade(idade);
+
+                                    } catch(IdadeInvalidaException IIE){
+                                        JOptionPane.showMessageDialog(null, "Idade deve ser maior que zero!", "ERRO!", JOptionPane.INFORMATION_MESSAGE);
+
+                                    }
                                 
-                            }
-                            else
-                                JOptionPane.showMessageDialog(null, "Opção inavlida!");
+                                }
+                                else
+                                    JOptionPane.showMessageDialog(null, "Opção inavlida!");
                             
-                            if(JOptionPane.showInputDialog("Deseja editar mais alguma informação?(S/N)").toLowerCase().equals("s"))
-                                continuar = true;
+                                if(JOptionPane.showInputDialog("Deseja editar mais alguma informação?(S/N)").toLowerCase().equals("s"))
+                                    continuar = true;
 
-                        }while(continuar);
+                            }while(continuar);
+                        }
+                        i++;
+
                     }
-                    i++;
+                } else if(opcao == 2){
+                    mostrarRegistros(this.registrosAnimais);
+                    int numeroRegistro = Integer.parseInt(JOptionPane.showInputDialog("Qual registro deseja apagar?\nInforme o numero do registro."));
 
-                }
-            } else if(opcao == 2){
-                mostrarRegistros(this.registrosAnimais);
-                int numeroRegistro = Integer.parseInt(JOptionPane.showInputDialog("Qual registro deseja apagar?\nInforme o numero do registro."));
-
-                if(numeroRegistro >= 1 && numeroRegistro <= this.registrosAnimais.size())
-                    this.registrosAnimais.remove(numeroRegistro - 1);
-                else
-                    JOptionPane.showMessageDialog(null, "Registro inválido!");
+                    if(numeroRegistro >= 1 && numeroRegistro <= this.registrosAnimais.size())
+                        this.registrosAnimais.remove(numeroRegistro - 1);
+                    else
+                        JOptionPane.showMessageDialog(null, "Registro inválido!");
                 
-            } else
-                JOptionPane.showMessageDialog(null, "Opção invalida!");
+                } else
+                    JOptionPane.showMessageDialog(null, "Opção invalida!");
 
-        } else
-            JOptionPane.showMessageDialog(null, "Nao existem registros.");
+            } else
+                JOptionPane.showMessageDialog(null, "Nao existem registros.");
+                
+        } catch(PermissaoInvalidaException PIE){
+            JOptionPane.showMessageDialog(null, "Voce não tem permissão para fazer isso.");
+
+        }
+        
         
     }
 
@@ -456,6 +508,5 @@ public class GestaoDeAnimais{
             continuar = true;
 
         } while(continuar);
-        
     }
 }

@@ -32,6 +32,8 @@ public class Teste{
             //adocao.devolucao(gestao);
             Voluntario.cadastrar();
             Voluntario.cadastrar();
+
+            //testar agendamento de atividades
         } catch(Exception e){
             JOptionPane.showMessageDialog(null, "Algum erro imprevisto aconteceu.");
             

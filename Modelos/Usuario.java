@@ -3,7 +3,6 @@ package TrabalhoFinalPOO.Modelos;
 import java.util.List;
 import java.util.ArrayList;
 import TrabalhoFinalPOO.Excecoes.*;
-import TrabalhoFinalPOO.Usuarios.Voluntario;
 
 public abstract class Usuario{
     private String login, senha;

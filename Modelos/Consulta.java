@@ -1,22 +1,16 @@
 package TrabalhoFinalPOO.Modelos;
 
-import TrabalhoFinalPOO.Excecoes.DataInvalidaException;
-
 public class Consulta extends HistoricoMedico{
     private String nomeVeterinario, relatorio;
 
-    public Consulta(String nome, String relatorio, String data) throws IllegalArgumentException, DataInvalidaException{
-        super(data);
-        
-        if((nome == null || nome.isEmpty() || nome.isBlank()) || (relatorio == null || relatorio.isEmpty() || relatorio.isBlank()))
-            throw new IllegalArgumentException();
-
-        this.nomeVeterinario = nome;
+    public Consulta(String nomeVeterinario, String nomeAnimal, String relatorio, String data){
+        super(nomeAnimal, data);
+        this.nomeVeterinario = nomeVeterinario;
         this.relatorio = relatorio;
     }
 
     @Override 
     public String toString(){
-        return "Consulta com: " + this.nomeVeterinario + ".\nFeita em " + getData() + ".\nRelatorio da consulta:\n" + this.relatorio;
+        return "Nome do animal: " + getNomeAnimal() + ".\nConsulta com: " + this.nomeVeterinario + ".\nFeita em " + getData() + ".\nRelatorio da consulta:\n" + this.relatorio;
     }
 }

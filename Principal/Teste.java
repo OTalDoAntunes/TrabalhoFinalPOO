@@ -17,9 +17,9 @@ public class Teste{
             Veterinario veterinario = new Veterinario("Jorge", "hjJSsGJ");
             AdiministradorDoAbrigo adm = new AdiministradorDoAbrigo("Geraldao", "OitoOitoMeiaSete");
 
-            //gestaoAnimais.cadastrarAnimais(voluntario);
-            //gestaoAnimais.cadastrarAnimais(veterinario);
-            //gestaoAnimais.cadastrarAnimais(adm);
+            gestaoAnimais.cadastrarAnimais(voluntario);
+            gestaoAnimais.cadastrarAnimais(veterinario);
+            gestaoAnimais.cadastrarAnimais(adm);
             //System.out.println("editando elementos");
             //gestao.editarRegistros();
             //System.out.println("Verificando a ediçao e removendo");
@@ -34,13 +34,21 @@ public class Teste{
             //Voluntario.cadastrar();
             //Voluntario.cadastrar();
 
-            gerenciadorAtividades.cadastrarAtividade(adm);
-            gerenciadorAtividades.cadastrarAtividade(adm);
-            gerenciadorAtividades.cadastrarAtividade(adm);
+            //gerenciadorAtividades.cadastrarAtividade(adm);
+            //gerenciadorAtividades.cadastrarAtividade(adm);
+            //gerenciadorAtividades.cadastrarAtividade(adm);
 
-            gerenciadorAtividades.editarAtividade(adm);
+            //gerenciadorAtividades.editarAtividade(adm);
 
-            voluntario.candidatarAtividades();
+            //voluntario.candidatarAtividades();
+            //voluntario.candidatarAtividades();
+
+            //voluntario.verHistoricoParticipacoes();
+
+            Veterinario.cadastrar();
+            Veterinario.cadastrar();
+
+            veterinario.registraAtividadesMedicas();
         } catch(Exception e){
 
         }

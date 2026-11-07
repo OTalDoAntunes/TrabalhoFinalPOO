@@ -1,19 +1,16 @@
 package TrabalhoFinalPOO.Modelos;
 
-import TrabalhoFinalPOO.Excecoes.DataInvalidaException;
-
 public abstract class HistoricoMedico{
-    private String data;
+    private String nomeAnimal, data;
 
-    public HistoricoMedico(String data) throws IllegalArgumentException, DataInvalidaException{
-        if(data == null || data.isEmpty() || data.isBlank())
-            throw new IllegalArgumentException();
-        if(DataInvalidaException.validarData(data) == false)
-            throw new DataInvalidaException("Data invalida.");
-
+    public HistoricoMedico(String nomeAnimal, String data){
+        this.nomeAnimal = nomeAnimal;
         this.data = data;
     }
 
+    public String getNomeAnimal(){
+        return this.nomeAnimal;
+    }
     public String getData(){
         return this.data;
     }

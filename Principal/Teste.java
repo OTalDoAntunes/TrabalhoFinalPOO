@@ -1,25 +1,25 @@
 package TrabalhoFinalPOO.Principal;
 
-import javax.swing.JOptionPane;
+import javax.swing.*;
+import TrabalhoFinalPOO.Excecoes.*;
 import TrabalhoFinalPOO.Funcionalidades.*;
-import TrabalhoFinalPOO.Modelos.Usuario;
-import TrabalhoFinalPOO.Usuarios.AdiministradorDoAbrigo;
-import TrabalhoFinalPOO.Usuarios.Veterinario;
-import TrabalhoFinalPOO.Usuarios.Voluntario;
+import TrabalhoFinalPOO.Modelos.*;
+import TrabalhoFinalPOO.Usuarios.*;
 
 public class Teste{
     public static void main(String args[]){
         try{
-            GestaoDeAnimais gestao = new GestaoDeAnimais();
+            GestaoDeAnimais gestaoAnimais = new GestaoDeAnimais();
             ProcessoDeAdocao adocao = new ProcessoDeAdocao();
+            AgendamentoDeAtividades gerenciadorAtividades = new AgendamentoDeAtividades();
 
-            Usuario voluntario = new Voluntario("Antunes", "400678");
-            Usuario veterinario = new Veterinario("Jorge", "hjJSsGJ");
-            Usuario adm = new AdiministradorDoAbrigo("Geraldao", "OitoOitoMeiaSete");
+            Voluntario voluntario = new Voluntario("Antunes", "400678");
+            Veterinario veterinario = new Veterinario("Jorge", "hjJSsGJ");
+            AdiministradorDoAbrigo adm = new AdiministradorDoAbrigo("Geraldao", "OitoOitoMeiaSete");
 
-            gestao.cadastrarAnimais(voluntario);
-            gestao.cadastrarAnimais(veterinario);
-            gestao.cadastrarAnimais(adm);
+            //gestaoAnimais.cadastrarAnimais(voluntario);
+            //gestaoAnimais.cadastrarAnimais(veterinario);
+            //gestaoAnimais.cadastrarAnimais(adm);
             //System.out.println("editando elementos");
             //gestao.editarRegistros();
             //System.out.println("Verificando a ediçao e removendo");
@@ -28,16 +28,21 @@ public class Teste{
             //gestao.editarRegistros();
 
             //gestao.buscar();
-            //adocao.solicitarAdocao(gestao);
-            //adocao.devolucao(gestao);
-            Voluntario.cadastrar();
-            Voluntario.cadastrar();
+            //adocao.solicitarAdocao();
+            //adocao.devolucao();
 
-            //testar agendamento de atividades
+            //Voluntario.cadastrar();
+            //Voluntario.cadastrar();
+
+            gerenciadorAtividades.cadastrarAtividade(adm);
+            gerenciadorAtividades.cadastrarAtividade(adm);
+            gerenciadorAtividades.cadastrarAtividade(adm);
+
+            gerenciadorAtividades.editarAtividade(adm);
+
+            voluntario.candidatarAtividades();
         } catch(Exception e){
-            JOptionPane.showMessageDialog(null, "Algum erro imprevisto aconteceu.");
-            
+
         }
-        
     }
 }

@@ -5,8 +5,10 @@ import java.util.ArrayList;
 import javax.swing.*;
 import TrabalhoFinalPOO.Modelos.Usuario;
 import TrabalhoFinalPOO.Modelos.Animal;
+import TrabalhoFinalPOO.Modelos.Atividade;
 import TrabalhoFinalPOO.Excecoes.*;
 import TrabalhoFinalPOO.Funcionalidades.GestaoDeAnimais;
+import TrabalhoFinalPOO.Funcionalidades.AgendamentoDeAtividades;
 
 public class Voluntario extends Usuario{
     private List<Animal> animaisResponsavel = new ArrayList<>();
@@ -38,14 +40,48 @@ public class Voluntario extends Usuario{
         
     }
 
-    public void verAnimaisDisponiveis(GestaoDeAnimais gerenciador){
+    public void verAnimaisDisponiveis(){
         List<Animal> disponiveis = new ArrayList<>();
 
-        for(Animal a : gerenciador.getRegistrosAnimais()){
+        for(Animal a : GestaoDeAnimais.getRegistrosAnimais()){
             if(a.getStatusAdocao().equalsIgnoreCase("disponivel") || a.getStatusAdocao().equalsIgnoreCase("disponível"))
                 disponiveis.add(a);
         }
         
-        gerenciador.mostrarRegistros(disponiveis);
+        GestaoDeAnimais.mostrarRegistros(disponiveis);
+    }
+
+    public void candidatarAtividades(){
+        AgendamentoDeAtividades.exibirAtividades(AgendamentoDeAtividades.getAtividades());
+
+        if(AgendamentoDeAtividades.getAtividades().size() != 0){
+            boolean continuar, candidatou;
+
+            do{
+                continuar = false;
+                candidatou = false;
+                
+                String atividade = JOptionPane.showInputDialog("Insira o nome da atividade que voce deseja se candidatar.").trim();
+        
+                for(Atividade a : AgendamentoDeAtividades.getAtividades()){
+                    if(a.getNomeAtividade().equals(atividade)){
+                        a.adiconarVoluntario(this);
+                        JOptionPane.showMessageDialog(null, "Voce se candidatou a uma atividade.");
+                        candidatou = true;
+                    }
+                }
+
+                if(candidatou == false)
+                    JOptionPane.showMessageDialog(null, "Não existe uma atividade com esse nome.");
+
+                if(JOptionPane.showInputDialog("Deseja se candidatar a mais alguma atividade(s/n):").trim().equalsIgnoreCase("s"))
+                    continuar = true;
+            } while(continuar == true);
+        }
+    }
+
+    @Override 
+    public String toString(){
+        return "Login: " + getLogin() + ".";
     }
 }

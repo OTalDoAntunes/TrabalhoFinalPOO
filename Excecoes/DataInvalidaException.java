@@ -31,8 +31,26 @@ public class DataInvalidaException extends Exception{
                         return false;
                 }
                 else{
-                    if(data.charAt(0) > '2' || (data.charAt(0) == '2' && data.charAt(1) > '8'))
-                        return false;
+                    int ano = Integer.parseInt(data.substring(6));
+
+                    if(ano % 100 == 0){
+                        if(ano % 400 == 0){
+                            if(data.charAt(0) > '2' || (data.charAt(0) == '2' && data.charAt(1) > '9'))
+                                return false;
+                        }
+                        else{
+                            if(data.charAt(0) > '2' || (data.charAt(0) == '2' && data.charAt(1) > '8'))
+                                return false;
+                        }
+                    }
+                    else if(ano % 4 == 0){
+                        if(data.charAt(0) > '2' || (data.charAt(0) == '2' && data.charAt(1) > '9'))
+                            return false;
+                    }
+                    else{
+                        if(data.charAt(0) > '2' || (data.charAt(0) == '2' && data.charAt(1) > '8'))
+                            return false;
+                    }
                 }
                 break;
             }

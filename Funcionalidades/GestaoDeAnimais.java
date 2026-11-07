@@ -9,13 +9,13 @@ import TrabalhoFinalPOO.Usuarios.*;
 import TrabalhoFinalPOO.Excecoes.*;
 
 public class GestaoDeAnimais{
-    private  List<Animal> registrosAnimais = new ArrayList<>();
+    private  static List<Animal> registrosAnimais = new ArrayList<>();
     
-    public List<Animal> getRegistrosAnimais(){
-        return this.registrosAnimais;
+    public static List<Animal> getRegistrosAnimais(){
+        return registrosAnimais;
     }
 
-    public void mostrarRegistros(List<Animal> registros){
+    public static void mostrarRegistros(List<Animal> registros){
         if(registros.size() != 0){
             StringBuilder todosRegistros = new StringBuilder();
             int i = 1;
@@ -79,7 +79,7 @@ public class GestaoDeAnimais{
                 throw new IdadeInvalidaException("Idade menor ou igual a zero.");
 
             Animal novoAnimal = new Animal(nome, especie, raca, porte, estadoDeSaude, dataDeResgate, statusDaAdocao, idade);
-            this.registrosAnimais.add(novoAnimal);
+            registrosAnimais.add(novoAnimal);
 
         } catch(IllegalArgumentException IAE){
             JOptionPane.showMessageDialog(null, "Entrada invalida", "ERRO!", JOptionPane.INFORMATION_MESSAGE);
@@ -103,17 +103,17 @@ public class GestaoDeAnimais{
         try{
             if(tipoUsuario instanceof Voluntario)
                 throw new PermissaoInvalidaException("Voce não possui permissao para fazer isso.");
-            if(this.registrosAnimais.size() != 0){
+            if(registrosAnimais.size() != 0){
                 int opcao = Integer.parseInt(JOptionPane.showInputDialog("Qual operação deseja realizar?\n1 - Editar o registro de um animal.\n2 - Remover um registro."));
 
                 if(opcao == 1){
                     boolean continuar;
-                    mostrarRegistros(this.registrosAnimais);
+                    mostrarRegistros(registrosAnimais);
                     int numeroRegistro = Integer.parseInt(JOptionPane.showInputDialog("Qual registro deseja editar?\nInforme o numero do registro.")), i = 1;
                     do{
                         continuar = false;
 
-                        for(Animal g : this.registrosAnimais){
+                        for(Animal g : registrosAnimais){
                             if(i == numeroRegistro){
                                     String dadoAltera = JOptionPane.showInputDialog("Qual informaçâo quer editar?");
                                     dadoAltera = dadoAltera.replace(" ", "");
@@ -244,11 +244,11 @@ public class GestaoDeAnimais{
                             
                         }while(continuar);
                 } else if(opcao == 2){
-                    mostrarRegistros(this.registrosAnimais);
+                    mostrarRegistros(registrosAnimais);
                     int numeroRegistro = Integer.parseInt(JOptionPane.showInputDialog("Qual registro deseja apagar?\nInforme o numero do registro."));
 
-                    if(numeroRegistro >= 1 && numeroRegistro <= this.registrosAnimais.size())
-                        this.registrosAnimais.remove(numeroRegistro - 1);
+                    if(numeroRegistro >= 1 && numeroRegistro <= registrosAnimais.size())
+                        registrosAnimais.remove(numeroRegistro - 1);
                     else
                         JOptionPane.showMessageDialog(null, "Registro inválido!");
                 
@@ -285,7 +285,7 @@ public class GestaoDeAnimais{
                     List<Animal> buscaFiltrada = new ArrayList<>();
                     int encontrado = 0;
 
-                    for(Animal a : this.registrosAnimais){
+                    for(Animal a : registrosAnimais){
                         if(a.getNome().equals(nome)){
                             buscaFiltrada.add(a);
                             encontrado++;
@@ -312,7 +312,7 @@ public class GestaoDeAnimais{
                     List<Animal> buscaFiltrada = new ArrayList<>();
                     int encontrado = 0;
 
-                    for(Animal a : this.registrosAnimais){
+                    for(Animal a : registrosAnimais){
                         if(a.getEspecie().equals(especie)){
                             buscaFiltrada.add(a);
                             encontrado++;
@@ -339,7 +339,7 @@ public class GestaoDeAnimais{
                     List<Animal> buscaFiltrada = new ArrayList<>();
                     int encontrado = 0;
 
-                    for(Animal a : this.registrosAnimais){
+                    for(Animal a : registrosAnimais){
                         if(a.getRaca().equals(raca)){
                             buscaFiltrada.add(a);
                             encontrado++;
@@ -366,7 +366,7 @@ public class GestaoDeAnimais{
                     List<Animal> buscaFiltrada = new ArrayList<>();
                     int encontrado = 0;
 
-                    for(Animal a : this.registrosAnimais){
+                    for(Animal a : registrosAnimais){
                         if(a.getPorte().equals(porte)){
                             buscaFiltrada.add(a);
                             encontrado++;
@@ -393,7 +393,7 @@ public class GestaoDeAnimais{
                     List<Animal> buscaFiltrada = new ArrayList<>();
                     int encontrado = 0;
 
-                    for(Animal a : this.registrosAnimais){
+                    for(Animal a : registrosAnimais){
                         if(a.getEstadoSaude().equals(saude)){
                             buscaFiltrada.add(a);
                             encontrado++;
@@ -422,7 +422,7 @@ public class GestaoDeAnimais{
                     List<Animal> buscaFiltrada = new ArrayList<>();
                     int encontrado = 0;
 
-                    for(Animal a : this.registrosAnimais){
+                    for(Animal a : registrosAnimais){
                         if(a.getDataResgate().equals(data)){
                             buscaFiltrada.add(a);
                             encontrado++;
@@ -454,7 +454,7 @@ public class GestaoDeAnimais{
                     List<Animal> buscaFiltrada = new ArrayList<>();
                     int encontrado = 0;
 
-                    for(Animal a : this.registrosAnimais){
+                    for(Animal a : registrosAnimais){
                         if(a.getStatusAdocao().equalsIgnoreCase(status)){
                             buscaFiltrada.add(a);
                             encontrado++;
@@ -484,7 +484,7 @@ public class GestaoDeAnimais{
                 List<Animal> buscaFiltrada = new ArrayList<>();
                     int encontrado = 0;
 
-                    for(Animal a : this.registrosAnimais){
+                    for(Animal a : registrosAnimais){
                         if(a.getIdade() == idade){
                             buscaFiltrada.add(a);
                             encontrado++;

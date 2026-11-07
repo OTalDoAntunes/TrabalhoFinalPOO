@@ -8,15 +8,15 @@ import TrabalhoFinalPOO.Excecoes.*;
 
 public class ProcessoDeAdocao{
 
-    public void solicitarAdocao(GestaoDeAnimais gerenciador){
+    public void solicitarAdocao(){
         List<Animal> disponiveis = new ArrayList<>();
 
-        for(Animal a : gerenciador.getRegistrosAnimais()){
+        for(Animal a : GestaoDeAnimais.getRegistrosAnimais()){
             if(a.getStatusAdocao().trim().equalsIgnoreCase("Disponivel") || a.getStatusAdocao().trim().equalsIgnoreCase("Disponível"))
                 disponiveis.add(a);
         }
 
-        gerenciador.mostrarRegistros(disponiveis);
+        GestaoDeAnimais.mostrarRegistros(disponiveis);
         int numeroRegistro = Integer.parseInt(JOptionPane.showInputDialog("Qual animal deseja adotar?\nInforme o numero do registro.")), i = 1;
         boolean solicitacaoFeita = false;
 
@@ -124,7 +124,7 @@ public class ProcessoDeAdocao{
                     }
                 } while(entradaIncorreta);
 
-                for(Animal a : gerenciador.getRegistrosAnimais()){
+                for(Animal a : GestaoDeAnimais.getRegistrosAnimais()){
                     if(a.getNome().equals(nome) && a.getEspecie().equals(especie) && a.getRaca().equals(raca) && a.getPorte().equals(porte) && a.getEstadoSaude().equals(estadoDeSaude) && a.getDataResgate().equals(dataDeResgate) && a.getIdade() == idade && a.getStatusAdocao().equals("indisponivel")){
                         animalEncontrado = true;
                         //colocar dentro da lista de devoluçao

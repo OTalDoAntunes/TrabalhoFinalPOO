@@ -17,7 +17,7 @@ public class AgendamentoDeAtividades{
         return atividades;
     }
 
-    public void cadastrarAtividade(Usuario tipoUsuario){
+    public static void cadastrarAtividade(Usuario tipoUsuario){
         try{
             if(tipoUsuario instanceof AdiministradorDoAbrigo == false)
                 throw new PermissaoInvalidaException("Voce não tem permissão para fazer isso");
@@ -85,7 +85,7 @@ public class AgendamentoDeAtividades{
             JOptionPane.showMessageDialog(null, "Não existem atividades cadastradas.");
     }
 
-    public void editarAtividade(Usuario tipUsuario){
+    public static void editarAtividade(Usuario tipUsuario){
         try{
             if(tipUsuario instanceof AdiministradorDoAbrigo == false)
                 throw new PermissaoInvalidaException("Voce não tem permissão para fazer isso");

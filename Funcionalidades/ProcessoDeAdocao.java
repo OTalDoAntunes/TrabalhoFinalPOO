@@ -7,8 +7,7 @@ import TrabalhoFinalPOO.Modelos.Animal;
 import TrabalhoFinalPOO.Excecoes.*;
 
 public class ProcessoDeAdocao{
-
-    public void solicitarAdocao(){
+    public static void solicitarAdocao(){
         List<Animal> disponiveis = new ArrayList<>();
 
         for(Animal a : GestaoDeAnimais.getRegistrosAnimais()){
@@ -33,7 +32,7 @@ public class ProcessoDeAdocao{
             JOptionPane.showMessageDialog(null, "Não foi possivel encontrar um animal com esse numero de registro.");
     }   
 
-    public void devolucao(GestaoDeAnimais gerenciador){
+    public static void devolucao(GestaoDeAnimais gerenciador){
         try{
             boolean entradaIncorreta, animalEncontrado = false;
             String motivo = JOptionPane.showInputDialog("Informe o motivo da devolução do animal.");

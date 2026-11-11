@@ -37,7 +37,7 @@ public class GestaoDeAnimais{
         
     }
 
-    public void cadastrarAnimais(Usuario tipoUsuario){
+    public static void cadastrarAnimais(Usuario tipoUsuario){
         try{
             if(tipoUsuario instanceof Voluntario || tipoUsuario instanceof Veterinario)
                 throw new PermissaoInvalidaException("Voce não possui permissão para fazer isso.");
@@ -99,7 +99,7 @@ public class GestaoDeAnimais{
         
     }
 
-    public void editarRegistros(Usuario tipoUsuario){
+    public static void editarRegistros(Usuario tipoUsuario){
         try{
             if(tipoUsuario instanceof Voluntario)
                 throw new PermissaoInvalidaException("Voce não possui permissao para fazer isso.");
@@ -120,6 +120,9 @@ public class GestaoDeAnimais{
     
                                     if(dadoAltera.equalsIgnoreCase("nome")){
                                         try{
+                                            if(tipoUsuario instanceof Veterinario)
+                                                throw new PermissaoInvalidaException("Permissão invalida.");
+
                                             String nome = JOptionPane.showInputDialog("Insira o nome:").trim();
                                             if(nome == null || nome.isEmpty() || nome.isEmpty())
                                                 throw new IllegalArgumentException();
@@ -128,11 +131,17 @@ public class GestaoDeAnimais{
                                         } catch(IllegalArgumentException IAE){
                                             JOptionPane.showMessageDialog(null, "Entrada invalida.", "ERRO!", JOptionPane.INFORMATION_MESSAGE);
     
+                                        } catch(PermissaoInvalidaException PIE){
+                                            JOptionPane.showMessageDialog(null, "Voce não tem permissão para fazer isso.", "ERRO!", JOptionPane.INFORMATION_MESSAGE);
+
                                         }
                                     
                                     }
                                     else if(dadoAltera.equalsIgnoreCase("especie")){
                                         try{
+                                            if(tipoUsuario instanceof Veterinario)
+                                                throw new PermissaoInvalidaException("Permissão invalida.");
+
                                             String especie = JOptionPane.showInputDialog("Insira a especie:").trim();
                                             if(especie == null || especie.isEmpty() || especie.isBlank())
                                                 throw new IllegalArgumentException();
@@ -141,11 +150,17 @@ public class GestaoDeAnimais{
                                         } catch(IllegalArgumentException IAE){
                                             JOptionPane.showMessageDialog(null, "Entrada invalida.", "ERRO!", JOptionPane.INFORMATION_MESSAGE);
     
+                                        } catch(PermissaoInvalidaException PIE){
+                                            JOptionPane.showMessageDialog(null, "Voce não tem permissão para fazer isso.", "ERRO!", JOptionPane.INFORMATION_MESSAGE);
+
                                         }
                                     
                                     }
                                     else if(dadoAltera.equalsIgnoreCase("raca") || dadoAltera.equalsIgnoreCase("raça")){
                                         try{
+                                            if(tipoUsuario instanceof Veterinario)
+                                                throw new PermissaoInvalidaException("Permissão invalida.");
+
                                             String raca = JOptionPane.showInputDialog("Insira a raça:").trim();
                                             if(raca == null || raca.isEmpty() || raca.isBlank())
                                                 throw new IllegalArgumentException();
@@ -154,11 +169,17 @@ public class GestaoDeAnimais{
                                         } catch(IllegalArgumentException IAE){
                                             JOptionPane.showMessageDialog(null, "Entrada invalida.", "ERRO!", JOptionPane.INFORMATION_MESSAGE);
     
+                                        } catch(PermissaoInvalidaException PIE){
+                                            JOptionPane.showMessageDialog(null, "Voce não tem permissão para fazer isso.", "ERRO!", JOptionPane.INFORMATION_MESSAGE);
+
                                         }
                                     
                                     }
                                     else if(dadoAltera.equalsIgnoreCase("porte")){
                                         try{
+                                            if(tipoUsuario instanceof Veterinario)
+                                                throw new PermissaoInvalidaException("Permissão invalida.");
+
                                             String porte = JOptionPane.showInputDialog("Insira o porte:").trim();
                                             if(porte == null || porte.isEmpty() || porte.isBlank())
                                                 throw new IllegalArgumentException();
@@ -167,11 +188,17 @@ public class GestaoDeAnimais{
                                         } catch(IllegalArgumentException IAE){
                                             JOptionPane.showMessageDialog(null, "Entrada invalida.", "ERRO!", JOptionPane.INFORMATION_MESSAGE);
     
+                                        } catch(PermissaoInvalidaException PIE){
+                                            JOptionPane.showMessageDialog(null, "Voce não tem permissão para fazer isso.", "ERRO!", JOptionPane.INFORMATION_MESSAGE);
+
                                         }
                                     
                                     }
                                     else if(dadoAltera.equalsIgnoreCase("estadoDeSaude") || dadoAltera.equalsIgnoreCase("estadoDeSaúde")){
-                                        try{
+                                        try{ 
+                                            if(tipoUsuario instanceof AdiministradorDoAbrigo)
+                                                throw new PermissaoInvalidaException("Permissão inavlida.");
+
                                             String saude = JOptionPane.showInputDialog("Insira o estado de saúde:").trim();
                                             if(saude == null || saude.isEmpty() || saude.isBlank())
                                                 throw new IllegalArgumentException();
@@ -180,11 +207,17 @@ public class GestaoDeAnimais{
                                         } catch(IllegalArgumentException IAE){
                                             JOptionPane.showMessageDialog(null, "Entrada invalida.", "ERRO!", JOptionPane.INFORMATION_MESSAGE);
     
+                                        } catch(PermissaoInvalidaException PIE){
+                                            JOptionPane.showMessageDialog(null, "Apenas medicos podem mudar informações medicas.", "ERRO!", JOptionPane.INFORMATION_MESSAGE);
+
                                         }
                                     
                                     }
                                     else if(dadoAltera.equalsIgnoreCase("dataDeResgate")){
                                         try{
+                                            if(tipoUsuario instanceof Veterinario)
+                                                throw new PermissaoInvalidaException("Permissão invalida.");
+
                                             String data = JOptionPane.showInputDialog("Insira a data de resgate:\nA data deve estar no formato dia/mes/ano, com o dia e o mes contendo os dois algarismos e o ano completo.").trim();
                                             if(data == null || data.isEmpty() || data.isBlank())
                                                 throw new IllegalArgumentException();
@@ -198,11 +231,17 @@ public class GestaoDeAnimais{
                                         } catch(DataInvalidaException DIE){
                                             JOptionPane.showMessageDialog(null, "Data em um formato invalido.", "ERRO!", JOptionPane.INFORMATION_MESSAGE);
     
+                                        } catch(PermissaoInvalidaException PIE){
+                                            JOptionPane.showMessageDialog(null, "Voce não tem permissão para fazer isso.", "ERRO!", JOptionPane.INFORMATION_MESSAGE);
+
                                         }
                                     
                                     }
                                     else if(dadoAltera.equalsIgnoreCase("statusDaAdocao") || dadoAltera.equalsIgnoreCase("statusDaAdoção")){
                                         try{
+                                            if(tipoUsuario instanceof Veterinario)
+                                                throw new PermissaoInvalidaException("Permissão invalida.");
+
                                             String status = JOptionPane.showInputDialog("Insira o status da adoção(disponível ou indisponível):").trim();
                                             if(status == null || status.isEmpty() || status.isBlank())
                                                 throw new IllegalArgumentException();
@@ -216,11 +255,17 @@ public class GestaoDeAnimais{
                                         } catch(StatusAdocaoInvalidoException SAIE){
                                             JOptionPane.showMessageDialog(null, "Status de adoção invalido.", "ERRO!", JOptionPane.INFORMATION_MESSAGE);
     
+                                        } catch(PermissaoInvalidaException PIE){
+                                            JOptionPane.showMessageDialog(null, "Voce não tem permissão para fazer isso.", "ERRO!", JOptionPane.INFORMATION_MESSAGE);
+
                                         }
                                     
                                     }
                                     else if(dadoAltera.equalsIgnoreCase("idade")){
                                         try{
+                                            if(tipoUsuario instanceof Veterinario)
+                                                throw new PermissaoInvalidaException("Permissão invalida.");
+
                                             int idade = Integer.parseInt(JOptionPane.showInputDialog("Insira a idade:"));
                                             if(idade <= 0)
                                                 throw new IdadeInvalidaException("Idade menor ou igual a zero");
@@ -229,6 +274,9 @@ public class GestaoDeAnimais{
                                         } catch(IdadeInvalidaException IIE){
                                             JOptionPane.showMessageDialog(null, "Idade deve ser maior que zero!", "ERRO!", JOptionPane.INFORMATION_MESSAGE);
     
+                                        } catch(PermissaoInvalidaException PIE){
+                                            JOptionPane.showMessageDialog(null, "Voce não tem permissão para fazer isso.", "ERRO!", JOptionPane.INFORMATION_MESSAGE);
+
                                         }
                                     
                                     }
@@ -244,13 +292,21 @@ public class GestaoDeAnimais{
                             
                         }while(continuar);
                 } else if(opcao == 2){
-                    mostrarRegistros(registrosAnimais);
-                    int numeroRegistro = Integer.parseInt(JOptionPane.showInputDialog("Qual registro deseja apagar?\nInforme o numero do registro."));
+                    try{
+                        if(tipoUsuario instanceof Veterinario)
+                            throw new PermissaoInvalidaException("Permissão invalida.");
+                        
+                        mostrarRegistros(registrosAnimais);
+                        int numeroRegistro = Integer.parseInt(JOptionPane.showInputDialog("Qual registro deseja apagar?\nInforme o numero do registro."));
+    
+                        if(numeroRegistro >= 1 && numeroRegistro <= registrosAnimais.size())
+                            registrosAnimais.remove(numeroRegistro - 1);
+                        else
+                            JOptionPane.showMessageDialog(null, "Registro inválido!");
+                    } catch(PermissaoInvalidaException PIE){
+                        JOptionPane.showMessageDialog(null, "Voce não tem permissão para fazer isso.", "ERRO!", JOptionPane.INFORMATION_MESSAGE);
 
-                    if(numeroRegistro >= 1 && numeroRegistro <= registrosAnimais.size())
-                        registrosAnimais.remove(numeroRegistro - 1);
-                    else
-                        JOptionPane.showMessageDialog(null, "Registro inválido!");
+                    }
                 
                 } else
                     JOptionPane.showMessageDialog(null, "Opção invalida!");
@@ -266,7 +322,7 @@ public class GestaoDeAnimais{
         
     }
 
-    public void buscar() throws IllegalArgumentException{
+    public static void buscar() throws IllegalArgumentException{
         boolean continuar;
 
         do{

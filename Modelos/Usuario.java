@@ -30,4 +30,8 @@ public abstract class Usuario{
     public void adicionarUsuario(Usuario usuario){
         usuarios.add(usuario);
     }
+
+    public static List<Usuario> getUsuarios(){
+        return usuarios;
+    }
 }

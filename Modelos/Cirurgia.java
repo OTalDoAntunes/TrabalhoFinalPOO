@@ -8,6 +8,9 @@ public class Cirurgia extends HistoricoMedico{
         this.tipoCirurgia = tipo;
     }
 
+    public void setTipoCirurgia(String tipo){
+        this.tipoCirurgia = tipo;
+    }
     @Override 
     public String toString(){
         return "Nome do animal: " + getNomeAnimal() + ".\nCicurgia de " + this.tipoCirurgia + ". Realizada em " + getData() + ".";

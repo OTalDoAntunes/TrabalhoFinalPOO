@@ -14,4 +14,12 @@ public abstract class HistoricoMedico{
     public String getData(){
         return this.data;
     }
+
+    public void setNomeAnimal(String nome){
+        this.nomeAnimal = nome;
+    }
+
+    public void setData(String data){
+        this.data = data;
+    }
 }

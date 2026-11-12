@@ -9,14 +9,20 @@ import TrabalhoFinalPOO.Excecoes.*;
 import TrabalhoFinalPOO.Funcionalidades.*;
 
 public interface Menu{
-    default void menuPrincipal(){
+    public static void menuPrincipal(){
         int opcao;
+        try{
+            AdiministradorDoAbrigo adm = new AdiministradorDoAbrigo("adm", "LJk315mdf");
+            Usuario.getUsuarios().add(adm);
+        } catch(LoginJaExistenteException LJEE){}
 
         do{
             opcao = Integer.parseInt(JOptionPane.showInputDialog("==========Menu  principal==========\n1 - Fazer login.\n2 - Cadastra-se.\n3 - Ver animais disponiveis.\n4 - Sobre o sistema.\n0 - Sair.\nEscolha uma opção:"));
             
             if(opcao == 1){
                 try{
+                    boolean encontrado = false;
+
                     String login = JOptionPane.showInputDialog("Insira seu login:").trim();
                     if(login == null || login.isEmpty() || login.isBlank())
                         throw new IllegalArgumentException();
@@ -27,6 +33,7 @@ public interface Menu{
         
                     for(Usuario u : Usuario.getUsuarios()){
                         if(u.getLogin().equals(login)){
+                            encontrado = true;
                             if(u.getSenha().equals(senha)){
                                 if(u instanceof Voluntario){
                                     int opcaoVoluntario;
@@ -37,10 +44,10 @@ public interface Menu{
                                             ((Voluntario)u).verAnimaisDisponiveis();
                                         }
                                         else if(opcaoVoluntario == 2){
-                                            //adoção
+                                            ((Voluntario)u).solicitarAdocao();
                                         }
                                         else if(opcaoVoluntario == 3){
-                                            //ver as adoções
+                                            ((Voluntario)u).verSolicitacoes();
                                         }
                                         else if(opcaoVoluntario == 4){
                                             ((Voluntario)u).candidatarAtividades();
@@ -49,7 +56,9 @@ public interface Menu{
                                             ((Voluntario)u).verHistoricoParticipacoes();
                                         }
                                         else if(opcaoVoluntario == 6){
-                                            //notificações
+                                            Notificacoes.verNotificacoes(u);
+                                            if(JOptionPane.showInputDialog("Deseja apagar TODAS as notificações?(s/n)").trim().equalsIgnoreCase("s"))
+                                                Notificacoes.apagarNotificacoes(u);
                                         }
                                         else if(opcaoVoluntario == 0){
                                             JOptionPane.showMessageDialog(null, "Deslogado.");
@@ -59,6 +68,7 @@ public interface Menu{
                                         }
 
                                     } while(opcaoVoluntario != 0);
+                                    break;
                                 }
                                 else if(u instanceof Veterinario){
                                     int opcaoVeterinario;
@@ -88,13 +98,15 @@ public interface Menu{
                                             ((Veterinario)u).registraAtividadesMedicas();
                                         }
                                         else if(opcaoVeterinario == 3){
-                                            //editar atividades medicas
+                                            ((Veterinario)u).editarAtividadesMedicas();
                                         }
                                         else if(opcaoVeterinario == 4){
-                                            //emitir relatorio
+                                            ControleDeSaude.verHistoricoMedicoCompleto(u);
                                         }
                                         else if(opcaoVeterinario == 5){
-                                            //notificações
+                                            Notificacoes.verNotificacoes(u);
+                                            if(JOptionPane.showInputDialog("Deseja apagar TODAS as notificações?(s/n)").trim().equalsIgnoreCase("s"))
+                                                Notificacoes.apagarNotificacoes(u);
                                         }
                                         else if(opcaoVeterinario == 0){
                                             JOptionPane.showMessageDialog(null, "Deslogado.");
@@ -103,8 +115,9 @@ public interface Menu{
                                             JOptionPane.showMessageDialog(null, "Opção inexistente.");
                                         }
                                     } while(opcaoVeterinario != 0);
+                                    break;
                                 }
-                                else{
+                                else if(u instanceof AdiministradorDoAbrigo){
                                     int opcaoAdm;
 
                                     do{
@@ -117,19 +130,21 @@ public interface Menu{
                                             ((AdiministradorDoAbrigo)u).gerenciarUsuarios();
                                         }
                                         else if(opcaoAdm == 3){
-                                            //aprovar adoções
+                                            ((AdiministradorDoAbrigo)u).gerenciarAdocoes();
                                         }
                                         else if(opcaoAdm == 4){
                                             ((AdiministradorDoAbrigo)u).gerenciarEventos();
                                         }
                                         else if(opcaoAdm == 5){
-                                            //relatorios
+                                            ControleDeSaude.verHistoricoMedicoCompleto(u);
                                         }
                                         else if(opcaoAdm == 6){
-                                            //estatisticas
+                                            ((AdiministradorDoAbrigo)u).verEstatisticas();
                                         }
                                         else if(opcaoAdm == 7){
-                                            //notificações
+                                            Notificacoes.verNotificacoes(u);
+                                            if(JOptionPane.showInputDialog("Deseja apagar TODAS as notificações?(s/n)").trim().equalsIgnoreCase("s"))
+                                                Notificacoes.apagarNotificacoes(u);
                                         }
                                         else if(opcaoAdm == 0){
                                             JOptionPane.showMessageDialog(null, "Deslogando.");
@@ -138,13 +153,14 @@ public interface Menu{
                                             JOptionPane.showMessageDialog(null, "Opção invalida.");
                                         }
                                     } while(opcaoAdm != 0);
+                                    break;
                                 }
                             }
                             JOptionPane.showInternalMessageDialog(null, "Senha incorreta.");
-                            break;
                         }
                     }
-                    JOptionPane.showMessageDialog(null, "Login inexistente.");
+                    if(encontrado == false)
+                        JOptionPane.showMessageDialog(null, "Login inexistente.");
 
                 } catch(IllegalArgumentException IAE){
                     JOptionPane.showMessageDialog(null, "Entrada invalida.", "ERRO!", JOptionPane.INFORMATION_MESSAGE);
@@ -156,9 +172,13 @@ public interface Menu{
 
                 if(opcaoCadastro == 1){
                     Voluntario.cadastrar();
+
+                    Notificacoes.notificarAdiministrador("Um voluntario se cadastrou.");
                 }
                 else if(opcaoCadastro == 2){
                     Veterinario.cadastrar();
+
+                    Notificacoes.notificarAdiministrador("Um veterinario se cadastrou.");
                 }
                 else{
                     JOptionPane.showMessageDialog(null, "Opção invalida.");
@@ -168,14 +188,28 @@ public interface Menu{
                 List<Animal> disponiveis = new ArrayList<>();
 
                 for(Animal a : GestaoDeAnimais.getRegistrosAnimais()){
-                if(a.getStatusAdocao().equalsIgnoreCase("disponivel") || a.getStatusAdocao().equalsIgnoreCase("disponível"))
+                    for(Tratamento t : ControleDeSaude.getTratamentos()){
+                        if(a.getNome().equals(t.getNomeAnimal())){
+                            if(a.getStatusAdocao().equalsIgnoreCase("disponivel") || a.getStatusAdocao().equalsIgnoreCase("disponível"))
+                                disponiveis.add(a);
+                        }
+                    }
                     disponiveis.add(a);
                 }
         
                 GestaoDeAnimais.mostrarRegistros(disponiveis);
             }
             else if(opcao == 4){
-                //sobre o sistema
+                StringBuilder mensagem = new StringBuilder();
+                mensagem.append("Esse sistema tem como  finalidade  facilitar o controle e o acompanhamento\ndos animais resgatados pela ONG, para um funcionamento mais organizado\no sistema possui algumas exigencias como: data em um formato especifico,\nlogins unicos, senhas de oito caracteres com pelo menos uma letra maiuscu-\nla e dois numeros alem de em determinados momentos exigir um tipo especi-\nfico de entrada como a numerica utilizada para acessar esse campo.");
+            
+                JTextArea area = new JTextArea(mensagem.toString());
+                area.setEditable(false);
+
+                JScrollPane scroll = new JScrollPane(area);
+                scroll.setPreferredSize(new java.awt.Dimension(408,125));
+
+                JOptionPane.showMessageDialog(null, scroll, "Sobre o sistema.", JOptionPane.INFORMATION_MESSAGE);
             }
             else if(opcao == 0){
                 JOptionPane.showMessageDialog(null, "Programa encerrado.");

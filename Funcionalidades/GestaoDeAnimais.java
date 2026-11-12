@@ -108,10 +108,12 @@ public class GestaoDeAnimais{
 
                 if(opcao == 1){
                     boolean continuar;
-                    mostrarRegistros(registrosAnimais);
-                    int numeroRegistro = Integer.parseInt(JOptionPane.showInputDialog("Qual registro deseja editar?\nInforme o numero do registro.")), i = 1;
                     do{
                         continuar = false;
+
+                        mostrarRegistros(registrosAnimais);
+        
+                        int numeroRegistro = Integer.parseInt(JOptionPane.showInputDialog("Qual registro deseja editar?\nInforme o numero do registro.")), i = 1;
 
                         for(Animal g : registrosAnimais){
                             if(i == numeroRegistro){

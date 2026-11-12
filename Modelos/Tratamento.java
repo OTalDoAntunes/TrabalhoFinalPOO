@@ -10,6 +10,14 @@ public class Tratamento extends HistoricoMedico{
         this.duracao = duracao;
     }
 
+    public void setTipoTratamento(String tipo){
+        this.tipoTratamento = tipo;
+    }
+
+    public void setDuracao(int duracao){
+        this.duracao = duracao;
+    }
+    
     @Override 
     public String toString(){
         return "Nome do animal: " + getNomeAnimal() + ".\nTratamento de " + this.tipoTratamento + " com duração de " + this.duracao + " dias, iniciado em " + getData() + ".";

@@ -12,7 +12,7 @@ public interface Menu{
     public static void menuPrincipal(){
         int opcao;
         try{
-            AdiministradorDoAbrigo adm = new AdiministradorDoAbrigo("adm", "LJk315mdf");
+            AdiministradorDoAbrigo adm = new AdiministradorDoAbrigo("adm", "Adms4056");
             Usuario.getUsuarios().add(adm);
         } catch(LoginJaExistenteException LJEE){}
 
@@ -78,7 +78,7 @@ public interface Menu{
 
                                         if(opcaoVeterinario == 1){
                                             try{
-                                                int metodoVizualizacao = Integer.parseInt("Como deseja ver os animais:\n1 - Ver todos os animais.\n2 - Buscar por um animal em especifico.");
+                                                int metodoVizualizacao = Integer.parseInt(JOptionPane.showInputDialog("Como deseja ver os animais:\n1 - Ver todos os animais.\n2 - Buscar por um animal em especifico."));
 
                                                 if(metodoVizualizacao == 1){
                                                     GestaoDeAnimais.mostrarRegistros(GestaoDeAnimais.getRegistrosAnimais());

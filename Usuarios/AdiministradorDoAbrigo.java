@@ -42,11 +42,12 @@ public class AdiministradorDoAbrigo extends Usuario implements Notificacoes{
         int opcao = Integer.parseInt(JOptionPane.showInputDialog("Qual operação deseja realizar.\n1 - Ver usuarios.\n2 - Deletar um usuario."));
 
         if(opcao == 1){
-            if(Usuario.getUsuarios().size() != 0){
+            if(Usuario.getUsuarios().size() != 1){
                 StringBuilder todosUsuarios = new StringBuilder();
 
                 for(Usuario u : Usuario.getUsuarios()){
-                    todosUsuarios.append(u).append("\n-------------------------------------------\n");
+                    if(u instanceof Voluntario || u instanceof Veterinario)
+                        todosUsuarios.append(u).append("\n-------------------------------------------\n");
                 }
 
                 JTextArea area = new JTextArea(todosUsuarios.toString());
@@ -61,11 +62,12 @@ public class AdiministradorDoAbrigo extends Usuario implements Notificacoes{
         }
         else if(opcao == 2){
             try{
-                if(Usuario.getUsuarios().size() != 0){
+                if(Usuario.getUsuarios().size() != 1){
                     StringBuilder todosUsuarios = new StringBuilder();
     
                     for(Usuario u : Usuario.getUsuarios()){
-                        todosUsuarios.append(u).append("\n-------------------------------------------\n");
+                        if(u instanceof Voluntario || u instanceof Veterinario)
+                            todosUsuarios.append(u).append("\n-------------------------------------------\n");
                     }
     
                     JTextArea area = new JTextArea(todosUsuarios.toString());
@@ -89,6 +91,8 @@ public class AdiministradorDoAbrigo extends Usuario implements Notificacoes{
                         }
                     }
                 }
+                else
+                    JOptionPane.showMessageDialog(null, "Nao existem usuarios no sistema.");
             } catch(IllegalArgumentException IAE){
                 JOptionPane.showMessageDialog(null, "Entrada invalida.", "ERRO!", JOptionPane.INFORMATION_MESSAGE);
             }
@@ -262,8 +266,12 @@ public class AdiministradorDoAbrigo extends Usuario implements Notificacoes{
         }
 
         estatisticas.append(".\nQuantidade de voluntarios ativos: ").append(voluntariosAtivos);
+        double taxaAdocao;
 
-        double taxaAdocao = (adotados * 100) / GestaoDeAnimais.getRegistrosAnimais().size();
+        if(GestaoDeAnimais.getRegistrosAnimais().size() != 0)
+            taxaAdocao = (adotados * 100) / GestaoDeAnimais.getRegistrosAnimais().size();
+        else
+            taxaAdocao = 0;
 
         estatisticas.append(".\nTaxa de adoção: ").append(taxaAdocao).append("%.");
 

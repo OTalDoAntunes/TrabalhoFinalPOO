@@ -57,7 +57,7 @@ public interface Notificacoes {
                 StringBuilder notificacoes = new StringBuilder();
 
                 for(int i = 0; i < ((Voluntario)tipoUsuario).getNotificacoes().size(); i++){
-                    notificacoes.append(i + " - ").append(((Voluntario)tipoUsuario).getNotificacoes().get(i)).append("\n-------------------------------------------------\n");
+                     notificacoes.append(i + 1).append(" - ").append(((AdiministradorDoAbrigo)tipoUsuario).getNotificacoes().get(i)).append("\n-------------------------------------------------\n");
                 }
 
                 JTextArea area = new JTextArea(notificacoes.toString());
@@ -76,7 +76,7 @@ public interface Notificacoes {
                 StringBuilder notificacoes = new StringBuilder();
 
                 for(int i = 0; i < ((Veterinario)tipoUsuario).getNotificacoes().size(); i++){
-                    notificacoes.append(i + " - ").append(((Veterinario)tipoUsuario).getNotificacoes().get(i)).append("\n-------------------------------------------------\n");
+                     notificacoes.append(i + 1).append(" - ").append(((AdiministradorDoAbrigo)tipoUsuario).getNotificacoes().get(i)).append("\n-------------------------------------------------\n");
                 }
 
                 JTextArea area = new JTextArea(notificacoes.toString());
@@ -94,8 +94,8 @@ public interface Notificacoes {
             if(((AdiministradorDoAbrigo)tipoUsuario).getNotificacoes().size() != 0){
                 StringBuilder notificacoes = new StringBuilder();
 
-                for(int i = 1; i <= ((AdiministradorDoAbrigo)tipoUsuario).getNotificacoes().size(); i++){
-                    notificacoes.append(i + " - ").append(((AdiministradorDoAbrigo)tipoUsuario).getNotificacoes().get(i)).append("\n-------------------------------------------------\n");
+                for(int i = 0; i < ((AdiministradorDoAbrigo)tipoUsuario).getNotificacoes().size(); i++){
+                    notificacoes.append(i + 1).append(" - ").append(((AdiministradorDoAbrigo)tipoUsuario).getNotificacoes().get(i)).append("\n-------------------------------------------------\n");
                 }
 
                 JTextArea area = new JTextArea(notificacoes.toString());

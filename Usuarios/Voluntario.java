@@ -165,6 +165,8 @@ public class Voluntario extends Usuario implements Notificacoes{
 
             JOptionPane.showMessageDialog(null, scroll, "Historico completo de participações na ONG.", JOptionPane.INFORMATION_MESSAGE);
         }
+        else
+            JOptionPane.showMessageDialog(null, "Voce não participou de nenhuma atividade.re");
     }
     
     public void solicitarAdocao(){

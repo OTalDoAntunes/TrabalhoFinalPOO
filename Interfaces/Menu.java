@@ -38,7 +38,7 @@ public interface Menu{
                                 if(u instanceof Voluntario){
                                     int opcaoVoluntario;
                                     do{
-                                        opcaoVoluntario = Integer.parseInt(JOptionPane.showInputDialog("==========Menu voluntario==========\n1 - Ver animais disponiveis.\n2 - Solicitar adoção.\n3 - Consultar solicitações.\n4 - Participar de eventos.\n5 - Historico de participações.\n6 - Notificações.\n0 - Sair.\nEscolha uma opção:"));
+                                        opcaoVoluntario = Integer.parseInt(JOptionPane.showInputDialog("==========Menu voluntario==========\n1 - Ver animais disponiveis.\n2 - Solicitar adoção.\n3 - Consultar solicitações.\n4 - Devolver animais.\n5 - Participar de eventos.\n6 - Historico de participações.\n7 - Notificações.\n0 - Sair.\nEscolha uma opção:"));
     
                                         if(opcaoVoluntario == 1){
                                             ((Voluntario)u).verAnimaisDisponiveis();
@@ -50,12 +50,15 @@ public interface Menu{
                                             ((Voluntario)u).verSolicitacoes();
                                         }
                                         else if(opcaoVoluntario == 4){
-                                            ((Voluntario)u).candidatarAtividades();
+                                            ((Voluntario)u).devolucao();
                                         }
                                         else if(opcaoVoluntario == 5){
-                                            ((Voluntario)u).verHistoricoParticipacoes();
+                                            ((Voluntario)u).candidatarAtividades();
                                         }
                                         else if(opcaoVoluntario == 6){
+                                            ((Voluntario)u).verHistoricoParticipacoes();
+                                        }
+                                        else if(opcaoVoluntario == 7){
                                             Notificacoes.verNotificacoes(u);
                                             if(JOptionPane.showInputDialog("Deseja apagar TODAS as notificações?(s/n)").trim().equalsIgnoreCase("s"))
                                                 Notificacoes.apagarNotificacoes(u);

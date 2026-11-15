@@ -143,7 +143,7 @@ public class Voluntario extends Usuario implements Notificacoes{
             JScrollPane scroll = new JScrollPane(area);
             scroll.setPreferredSize(new java.awt.Dimension(200, 200));
 
-            JOptionPane.showMessageDialog(null, scroll, "Aniamis sobre sua responsabilidade.", JOptionPane.INFORMATION_MESSAGE);
+            JOptionPane.showMessageDialog(null, scroll, "Animais sobre sua responsabilidade.", JOptionPane.INFORMATION_MESSAGE);
         }
         else
             JOptionPane.showMessageDialog(null, "Voce ainda não é responsavel por nenhum animal.");
@@ -243,6 +243,9 @@ public class Voluntario extends Usuario implements Notificacoes{
                             
                             ProcessoDeAdocao.getDevolucoes().append("Motivo da devolução:\n").append(motivo).append("\nAnimal devolvido:\n").append(a).append("\n----------------------------------------------\n");
                             
+                            a.setStatusAdocao("disponivels");
+                            this.animaisResponsavel.remove(a);
+
                             Notificacoes.notificarAdiministrador("Um animal foi devolvido.");
                             Notificacoes.notificarUsuario("Voce devolveu um animal", this);
                             break;

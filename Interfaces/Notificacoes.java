@@ -37,14 +37,10 @@ public interface Notificacoes {
                 if(usuario instanceof Voluntario){
                     ((Voluntario)usuario).getNotificacoes().add(mensagem);
                 }
-            }
-            else if(u == usuario){
-                if(usuario instanceof Veterinario){
+                else if(usuario instanceof Veterinario){
                     ((Veterinario)usuario).getNotificacoes().add(mensagem);
                 }
-            }
-            else if(u == usuario){
-                if(usuario instanceof AdiministradorDoAbrigo){
+                else if(usuario instanceof AdiministradorDoAbrigo){
                     ((AdiministradorDoAbrigo)usuario).getNotificacoes().add(mensagem);
                 }
             }
@@ -57,14 +53,14 @@ public interface Notificacoes {
                 StringBuilder notificacoes = new StringBuilder();
 
                 for(int i = 0; i < ((Voluntario)tipoUsuario).getNotificacoes().size(); i++){
-                     notificacoes.append(i + 1).append(" - ").append(((AdiministradorDoAbrigo)tipoUsuario).getNotificacoes().get(i)).append("\n-------------------------------------------------\n");
+                     notificacoes.append(i + 1).append(" - ").append(((Voluntario)tipoUsuario).getNotificacoes().get(i)).append("\n---------------------------------------------------------------------\n");
                 }
 
                 JTextArea area = new JTextArea(notificacoes.toString());
                 area.setEditable(false);
 
                 JScrollPane scroll = new JScrollPane(area);
-                scroll.setPreferredSize(new java.awt.Dimension(200, 200));
+                scroll.setPreferredSize(new java.awt.Dimension(280, 280));
 
                 JOptionPane.showMessageDialog(null, scroll, "Notificações recebidas.", JOptionPane.INFORMATION_MESSAGE);
             }
@@ -76,14 +72,14 @@ public interface Notificacoes {
                 StringBuilder notificacoes = new StringBuilder();
 
                 for(int i = 0; i < ((Veterinario)tipoUsuario).getNotificacoes().size(); i++){
-                     notificacoes.append(i + 1).append(" - ").append(((AdiministradorDoAbrigo)tipoUsuario).getNotificacoes().get(i)).append("\n-------------------------------------------------\n");
+                     notificacoes.append(i + 1).append(" - ").append(((Veterinario)tipoUsuario).getNotificacoes().get(i)).append("\n---------------------------------------------------------------------\n");
                 }
 
                 JTextArea area = new JTextArea(notificacoes.toString());
                 area.setEditable(false);
 
                 JScrollPane scroll = new JScrollPane(area);
-                scroll.setPreferredSize(new java.awt.Dimension(200, 200));
+                scroll.setPreferredSize(new java.awt.Dimension(280, 280));
 
                 JOptionPane.showMessageDialog(null, scroll, "Notificações recebidas.", JOptionPane.INFORMATION_MESSAGE);
             }
@@ -95,14 +91,14 @@ public interface Notificacoes {
                 StringBuilder notificacoes = new StringBuilder();
 
                 for(int i = 0; i < ((AdiministradorDoAbrigo)tipoUsuario).getNotificacoes().size(); i++){
-                    notificacoes.append(i + 1).append(" - ").append(((AdiministradorDoAbrigo)tipoUsuario).getNotificacoes().get(i)).append("\n-------------------------------------------------\n");
+                     notificacoes.append(i + 1).append(" - ").append(((AdiministradorDoAbrigo)tipoUsuario).getNotificacoes().get(i)).append("\n---------------------------------------------------------------------\n");
                 }
 
                 JTextArea area = new JTextArea(notificacoes.toString());
                 area.setEditable(false);
 
                 JScrollPane scroll = new JScrollPane(area);
-                scroll.setPreferredSize(new java.awt.Dimension(200, 200));
+                scroll.setPreferredSize(new java.awt.Dimension(280, 280));
 
                 JOptionPane.showMessageDialog(null, scroll, "Notificações recebidas.", JOptionPane.INFORMATION_MESSAGE);
             }
